@@ -29,8 +29,7 @@ def download_and_extract_audio(artist_names, num_songs):
     audio_path = "audios"
 
     # Empty the folders before downloading new files
-    empty_folder(folder_path)
-    empty_folder(audio_path)
+    
 
     for artist_name in artist_names:
         videosSearch = VideosSearch(artist_name, limit=num_songs)
@@ -42,6 +41,7 @@ def download_and_extract_audio(artist_names, num_songs):
                 stream = yt.streams.get_highest_resolution()
                 if not os.path.exists(folder_path):
                     os.makedirs(folder_path)
+                empty_folder(folder_path)
                 stream.download(output_path=folder_path)
                 st.write("Downloaded:", yt.title)
             except Exception as e:
@@ -59,6 +59,8 @@ def download_and_extract_audio(artist_names, num_songs):
             audio = clip.audio
             if not os.path.exists(audio_path):
                 os.makedirs(audio_path)
+    
+            empty_folder(audio_path)
             audio.write_audiofile(f"{audio_path}/{auds[i]}.mp3", codec='libmp3lame')
 
     return yt.title
