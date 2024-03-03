@@ -1,3 +1,4 @@
 pytube
 moviepy
 youtube-search-python
+pydub
