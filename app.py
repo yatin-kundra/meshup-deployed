@@ -74,6 +74,7 @@ def concatenate_audio_files():
     output_folder = "mashups"
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
+    empty_folder(output_folder)
     combined.export(f"{output_folder}/combined.mp3", format="mp3")
 
 
