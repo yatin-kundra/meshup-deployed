@@ -31,8 +31,6 @@ def download_and_extract_audio(artist_names, num_songs):
     # Empty the folders before downloading new files
     empty_folder(folder_path)
     empty_folder(audio_path)
-    
-    
 
     for artist_name in artist_names:
         videosSearch = VideosSearch(artist_name, limit=num_songs)
@@ -94,7 +92,7 @@ def send_email(email, audio_path):
         auth=('api', MAILGUN_API_KEY),
         files=[('attachment', (audio_file, open(os.path.join(audio_path, audio_file), 'rb').read())) for audio_file in audio_files],
         data={
-            'from': "alexrandi@sandbox4c4f3417170a496bbdc086c35085e484.mailgun.org",
+            'from': "MeshupMania@sandbox4c4f3417170a496bbdc086c35085e484.mailgun.org",
             'to': [email],
             'subject': 'Mashup of Audios',
             'text': 'Attached is the mashup of audio files.'
@@ -109,10 +107,10 @@ def send_email(email, audio_path):
 
 # Streamlit UI
 st.title("Mashup Creator")
-st.write("you can download your meshup")
+
 artist_names_input = st.text_input("Enter the artist names separated by comma for creating mashup")
 num_songs = st.text_input("Enter the number of songs for each artist")
-email  = st.text_input("Enter your mail to recieve the mashup (optional)")
+email  = st.text_input("Enter your mail to recieve the mashup")
 if st.button("Create Mashup"):
     if artist_names_input:
         artist_names = [name.strip() for name in artist_names_input.split(",")]
@@ -131,7 +129,7 @@ if st.button("Create Mashup"):
             try:
                 with open(audio_path, "rb") as f:
                     bytes_data = f.read()
-                st.download_button(label=f"Download {title}.mp3", data=bytes_data, file_name=f"meshup.mp3")
+                st.download_button(label=f"Download {title}.mp3", data=bytes_data, file_name=f"mahsup.mp3")
                 st.success("Song Downloaded!")
             except Exception as e:
                 st.error(f"Failed to download: {e}")
