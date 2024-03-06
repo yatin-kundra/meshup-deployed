@@ -48,23 +48,32 @@ def download_and_extract_audio(artist_names, num_songs):
                 stream.download(output_path=folder_path)
                 st.write("Downloaded:", yt.title)
             except Exception as e:
-                st.write("An error occurred:", str(e))
+                st.write("An error occurred while downloading:", str(e))
 
         # Extract audio
-        vids = os.listdir(folder_path)
+        try:
+            vids = os.listdir(folder_path)
+        except FileNotFoundError:
+            st.write(f"Directory not found: {folder_path}")
+            continue  # Skip to the next artist if the directory is not found
+
         auds = [vid[:-4] for vid in vids]
 
         for i in range(len(vids)):
-            clip = mp.VideoFileClip(f"{folder_path}/{vids[i]}")
-            duration = clip.duration
-            end = random.randint(40,60)
-            clip = mp.VideoFileClip(f"{folder_path}/{vids[i]}").subclip(20, end)
-            audio = clip.audio
-            if not os.path.exists(audio_path):
-                os.makedirs(audio_path)
-            audio.write_audiofile(f"{audio_path}/{auds[i]}.mp3", codec='libmp3lame')
+            try:
+                clip = mp.VideoFileClip(f"{folder_path}/{vids[i]}")
+                duration = clip.duration
+                end = random.randint(40,60)
+                clip = mp.VideoFileClip(f"{folder_path}/{vids[i]}").subclip(20, end)
+                audio = clip.audio
+                if not os.path.exists(audio_path):
+                    os.makedirs(audio_path)
+                audio.write_audiofile(f"{audio_path}/{auds[i]}.mp3", codec='libmp3lame')
+            except Exception as e:
+                st.write(f"An error occurred while extracting audio: {str(e)}")
 
     return yt.title
+
 # Function to concatenate audio files
 def concatenate_audio_files():
     combined = AudioSegment.empty()
