@@ -1,5 +1,5 @@
 pip==23.1.2
-pytube
-moviepy==1.0.3
 youtube-search-python==1.6.6
 pydub==0.25.1
+pytube
+moviepy
