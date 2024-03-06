@@ -2,3 +2,4 @@ pytube
 moviepy
 youtube-search-python
 pydub
+libgl1-mesa-glx
