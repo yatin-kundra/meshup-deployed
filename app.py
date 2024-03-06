@@ -86,6 +86,7 @@ def send_email(email, audio_path):
     # Get list of audio files in the folder
     audio_files = [f for f in os.listdir(audio_path) if os.path.isfile(os.path.join(audio_path, f)) and f.endswith('.mp3')]
 
+
     if not audio_files:
         raise ValueError('No audio files found in the specified folder.')
 
@@ -121,7 +122,7 @@ if st.button("Create Mashup"):
         title = download_and_extract_audio(artist_names, int(num_songs))
         concatenate_audio_files()
         try:
-            folder_path = "/Users/yatin/PycharmProjects/cluster_models_eval/meshup_trails/mashups"
+            folder_path = folder_path = os.path.join(os.getcwd(), "mashups")
             send_email(email,folder_path)
             st.success('Email sent successfully!')
         except Exception as e:
