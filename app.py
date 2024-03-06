@@ -31,6 +31,15 @@ def download_and_extract_audio(artist_names, num_songs):
     folder_path = "videos"
     audio_path = "audios"
 
+
+
+# Create 'videos' directory if it doesn't exist
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
+    if not os.path.exists(audio_path):
+        os.makedirs(audio_path)
+
     # Empty the folders before downloading new files
     empty_folder(folder_path)
     empty_folder(audio_path)
@@ -38,6 +47,9 @@ def download_and_extract_audio(artist_names, num_songs):
     for artist_name in artist_names:
         videosSearch = VideosSearch(artist_name, limit=num_songs)
         links = [video['link'] for video in videosSearch.result()['result']]
+
+        
+
 
         for video_url in links:
             try:
@@ -48,7 +60,8 @@ def download_and_extract_audio(artist_names, num_songs):
                 stream.download(output_path=folder_path)
                 st.write("Downloaded:", yt.title)
             except Exception as e:
-                st.write("An error occurred while downloading:", str(e))
+                st.write(f"An error occurred while downloading {video_url}: {str(e)}")
+
 
         # Extract audio
         try:
