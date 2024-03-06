@@ -1,5 +1,6 @@
-pytube
-moviepy
-youtube-search-python
-pydub
-libgl1-mesa-glx
+pip 23.1.2
+pytube 15.0.0
+moviepyn 1.0.3
+youtube-search-python 1.6.6
+pydub 0.25.1
+Python 3.11.4
